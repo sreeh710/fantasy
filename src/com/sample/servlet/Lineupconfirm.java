@@ -216,7 +216,128 @@ public class Lineupconfirm extends HttpServlet {
 					String status="started";
 					 Statement statement7 = connection.createStatement();
 				        statement7.executeQuery("update match set status='"+status+"' where team2_id ='"+tid+"'") ;
-				        
+				        statement7.executeQuery("update match set status='"+status+"' where team2_id ='"+tid+"'") ;
+					       int score1=0;
+					       int score2=0;
+					       int curbo=po1;
+					       int bscore=0;
+					       int bowlscore=0;
+					       int curb =p1;
+					       int cnt=0;
+					       int bplayd=0;
+					       for(int i1=0;i1<5 &&cnt<5;i1++)
+					       {
+					    	   int wkt=0;
+					    	   bowlscore=0;
+					    	  for(int j1=0;j1< 6&& cnt<5;j1++)
+					    	  {
+					    		  Random k =new Random();
+					    		  int r=k.nextInt() %7;
+					    		  if(r==0)
+					    		  {
+					    			  PreparedStatement bats=connection.prepareStatement(  
+					    						"insert into Player_batstat values(?,?,?,?,?)");  
+					    						
+					    						bats.setInt(1,mid);  
+					    						bats.setInt(2,tid);  
+					    						bats.setInt(3,curb);  
+					    						bats.setInt(4,bscore);  
+					    						bats.setInt(5,bplayd);  
+
+					    						          
+					    						bats.executeUpdate();
+					    			  /*insert player score into db bscore variable*/
+					    			  cnt++;
+					    			  wkt++;
+					    			  curb=p2;
+					    			  bscore=0;
+					    			  bplayd=0;
+					    		  }
+					    		  else
+					    		  {
+					    			  score1=score1+r;
+					    			  bscore+=r;
+					    			  bplayd++;
+					    			  bowlscore+=r;
+					    		  }
+					    	  }
+					    	  PreparedStatement bats=connection.prepareStatement(  
+			    						"insert into Player_bowlstat values(?,?,?,?,?,?)");  
+			    						
+			    						bats.setInt(1,mid);  
+			    						bats.setInt(2,tid);  
+			    						bats.setInt(3,curbo);  
+			    						bats.setInt(4,i);  
+			    						bats.setInt(5,bowlscore);
+			    						bats.setInt(6,wkt);
+
+			    						          
+			    						bats.executeUpdate();
+					    	  /*update bowl score to db*/
+					    	   
+					       }
+					       score2=0;
+					       curb=po1;
+					       curbo=p1;
+					       bscore=0;
+					       bplayd=0;
+					       cnt=0;
+					       for(int i1=0;i1<5 && cnt <5;i1++)
+					       {
+					    	   bowlscore=0;
+					    	   int wkt=0;
+					    	   for(int j1=0;j1<6 && cnt<5;j1++)
+					    	   {
+					    		   Random k = new Random();
+					    		   int r=k.nextInt();
+					    		   if(r==0)
+					    		   {
+					    			   PreparedStatement bats=connection.prepareStatement(  
+					    						"insert into Player_batstat values(?,?,?,?,?)");  
+					    						
+					    						bats.setInt(1,mid);  
+					    						bats.setInt(2,tid);  
+					    						bats.setInt(3,curb);  
+					    						bats.setInt(4,bscore);  
+					    						bats.setInt(5,bplayd);  
+
+					    						          
+					    						bats.executeUpdate();
+					    							/*bats*/
+					    			   cnt++;
+						    			  curb=p2;
+						    			  bscore=0;
+						    			  bplayd=0;   
+						    			  wkt++;
+					    		   }
+					    		   else
+					    		   {
+					    			   score2=score2+r;
+						    			  bscore+=r;
+						    			  bplayd++;
+						    			  bowlscore+=r;
+					    			   
+						    			 
+					    		   }
+					    		   if(score2>score1)
+					    		   { cnt=7;}
+					    		   PreparedStatement bats=connection.prepareStatement(  
+				    						"insert into Player_bowlstat values(?,?,?,?,?,?)");  
+				    						
+				    						bats.setInt(1,mid);  
+				    						bats.setInt(2,tid);  
+				    						bats.setInt(3,curbo);  
+				    						bats.setInt(4,i);  
+				    						bats.setInt(5,bowlscore);
+				    						bats.setInt(6,wkt);
+
+				    						          
+				    						bats.executeUpdate();
+					    	   }
+					    	   
+					       }
+					        
+
 				        
 				        response.sendRedirect("match.jsp");
 				}
