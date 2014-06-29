@@ -216,7 +216,6 @@ public class Lineupconfirm extends HttpServlet {
 					String status="started";
 					 Statement statement7 = connection.createStatement();
 				        statement7.executeQuery("update match set status='"+status+"' where team2_id ='"+tid+"'") ;
-				        statement7.executeQuery("update match set status='"+status+"' where team2_id ='"+tid+"'") ;
 					       int score1=0;
 					       int score2=0;
 					       int curbo=po1;
